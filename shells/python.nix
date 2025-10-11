@@ -1,83 +1,43 @@
 { pkgs, ... }:
 
-{
-    imports = [
-        ./alacritty.nix
+let 
+    python = pkgs.python312;
+    pythonPackages = python.pkgs;
+    lib-path = with pkgs; lib.makeLibraryPath [
+        libffi
+        openssl
+        stdenv.cc.cc
     ];
-    pythonPackages = pkgs.python312Packages;
     pyPkgs = with pythonPackages; [
-        pip
+        venvShellHook
         uv
-        tf-keras
-        tensorflow
-        opencv-python
-        torch
-        spacy
-        pydicom
-        pycrypto
-        sympy
-        pandas
-        requests
-        numba
-        numpy
-        # jupyter
-        s3fs
-        scikit-learn
-        scikit-image
-        nltk
-        geopy
-        requests
-        matplotlib
-        ortools
-        streamlit
-        keras
-        tkinter
-        transformers
-        sentencepiece
-        graphviz
     ];
+in pkgs.mkShell {
+    packages = [
+        pkgs.python3
+        pyPkgs
+    ];
+    buildInputs = with pkgs; [
+        openssl
+        git
+        openssh
+        rsync
+    ];
+    shellHook = ''
+        export "LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${lib-path}"
+        VENV=.venv
+
+        if test ! -d $VENV; then
+          uv venv
+        fi
+        source ./$VENV/bin/activate
+        export PYTHONPATH=`pwd`/$VENV/${python.sitePackages}/:$PYTHONPATH
+        if [ -f requirements.txt ]; then
+            uv pip install -r requirements.txt
+        fi
+    '';
+
+    postShellHook = ''
+        ln -sf ${python.sitePackages}/* ./.venv/lib/python/site-packages
+    '';
 }
-# let
-#     pkgs = import <nixpkgs> {};
-#     pythonPackages = pkgs.python312Packages;
-#     pyPkgs = with pythonPackages; [
-#         pip
-#         uv
-#         tf-keras
-#         tensorflow
-#         opencv-python
-#         torch
-#         spacy
-#         pydicom
-#         pycrypto
-#         sympy
-#         pandas
-#         requests
-#         numba
-#         numpy
-#         # jupyter
-#         s3fs
-#         scikit-learn
-#         scikit-image
-#         nltk
-#         geopy
-#         requests
-#         matplotlib
-#         ortools
-#         streamlit
-#         keras
-#         tkinter
-#         transformers
-#         sentencepiece
-#         graphviz
-#     ];
-# in pkgs.mkShell {
-#         packages = [
-#             (pkgs.python3.withPackages (python-pkgs: [
-#                 python-pkgs.jupyter
-#             ]))
-#             pkgs.python3
-#             pyPkgs
-#         ];
-#
-#     }
