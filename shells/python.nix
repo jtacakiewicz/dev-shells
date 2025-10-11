@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 let 
-    python = pkgs.python312;
+    python = pkgs.python313;
     pythonPackages = python.pkgs;
     lib-path = with pkgs; lib.makeLibraryPath [
         libffi
@@ -14,7 +14,10 @@ let
     ];
 in pkgs.mkShell {
     packages = [
-        pkgs.python3
+        pkgs.python310
+        pkgs.python311
+        pkgs.python312
+        pkgs.python313
         pyPkgs
     ];
     buildInputs = with pkgs; [
@@ -22,16 +25,24 @@ in pkgs.mkShell {
         git
         openssh
         rsync
+        glib
+        zlib
+        libGL
+        fontconfig
+        xorg.libX11
+        libxkbcommon
+        freetype
+        dbus
     ];
     shellHook = ''
         export "LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${lib-path}"
         VENV=.venv
 
         if test ! -d $VENV; then
-          uv venv
+            uv venv
+            echo "if you want to use other python version use 'export UV_PYTHON=3.x' and remove current .venv"
         fi
         source ./$VENV/bin/activate
-        export PYTHONPATH=`pwd`/$VENV/${python.sitePackages}/:$PYTHONPATH
         if [ -f requirements.txt ]; then
             uv pip install -r requirements.txt
         fi
