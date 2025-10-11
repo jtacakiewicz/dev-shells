@@ -17,8 +17,12 @@ pkgs.mkShell rec {
 
     # Environment variables for Android development
     shellHook = ''
-    export ANDROID_HOME=${pkgs.androidsdk}
-    export JAVA_HOME=${pkgs.openjdk11}
-    export PATH=$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$JAVA_HOME/bin:$PATH
+        export ANDROID_HOME=${pkgs.androidsdk}
+        export JAVA_HOME=${pkgs.openjdk11}
+        export PATH=$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools:$JAVA_HOME/bin:$PATH
+        if command -v zsh >/dev/null 2>&1
+        then
+            exec zsh
+        fi
     '';
 }
