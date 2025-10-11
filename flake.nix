@@ -1,15 +1,19 @@
 {
-  description = "A very basic flake";
+    description = "A very basic flake";
 
-  inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
-  };
+    inputs = {
+        nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+    };
 
-  outputs = { self, nixpkgs }: {
+    outputs = { self, nixpkgs }: 
+        let
+            pkgs = nixpkgs.legacyPackages."x86_64-linux";
+        in
+            {
+            # importing package example
+            # packages."x86_64-linux".default = 
+            #     pkgs.callPackage (import ./default.nix) {};
 
-    packages.x86_64-linux.hello = nixpkgs.legacyPackages.x86_64-linux.hello;
-
-    packages.x86_64-linux.default = self.packages.x86_64-linux.hello;
-
-  };
+            devShells."x86_64-linux".default = pkgs.callPackage (import ./shells/python.nix) {};
+        };
 }
