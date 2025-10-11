@@ -13,6 +13,9 @@
             {
             devShells.${system} = {
                 python = pkgs.callPackage ./shells/python.nix { };
+                vulkan = pkgs.callPackage ./shells/vulkan.nix { };
+                react = pkgs.callPackage ./shells/react.nix { };
+                android = pkgs.callPackage ./shells/android.nix { };
             };
         };
 }
