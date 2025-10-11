@@ -6,6 +6,7 @@
 } }:
 
 pkgs.mkShell rec {
+    name = "android-env";
     buildInputs = [
         pkgs.openjdk11   # OpenJDK 11, required for Android Studio
         pkgs.android-studio-full # Android Studio package

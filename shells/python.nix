@@ -13,6 +13,7 @@ let
         uv
     ];
 in pkgs.mkShell {
+    name = "python-env";
     packages = [
         pkgs.python310
         pkgs.python311

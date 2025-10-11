@@ -1,7 +1,7 @@
 { pkgs, ... }:
 
 mkShell {
-    name = "vulkan";
+    name = "vulkan-env";
     packages = [
         glm
         glfw
