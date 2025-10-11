@@ -36,6 +36,10 @@ in pkgs.mkShell {
         if [ -f requirements.txt ]; then
             uv pip install -r requirements.txt
         fi
+        if command -v zsh >/dev/null 2>&1
+        then
+            exec zsh
+        fi
     '';
 
     postShellHook = ''
