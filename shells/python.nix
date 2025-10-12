@@ -11,6 +11,7 @@ let
     pyPkgs = with pythonPackages; [
         venvShellHook
         uv
+        python-lsp-server
     ];
 in pkgs.mkShell {
     name = "python-env";
