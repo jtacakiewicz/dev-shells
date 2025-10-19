@@ -6,6 +6,7 @@ pkgs.mkShell {
         nodejs_22
         yarn
         go
+        postgresql
     ];
     shellHook = ''
         if command -v zsh >/dev/null 2>&1
