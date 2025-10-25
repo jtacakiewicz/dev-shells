@@ -13,6 +13,7 @@ pkgs.mkShell {
         docker-compose
         golangci-lint
         eslint
+        biome
     ];
     shellHook = ''
         export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/docker.sock
