@@ -12,9 +12,9 @@ pkgs.mkShell {
         docker
         rootlesskit
         docker-compose
-        golangci-lint
         eslint
         biome
+        pre-commit
     ];
     shellHook = ''
         export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/docker.sock
