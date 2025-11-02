@@ -8,6 +8,7 @@ pkgs.mkShell {
         go
         gopls
         postgresql
+        sqlc
         docker
         rootlesskit
         docker-compose
