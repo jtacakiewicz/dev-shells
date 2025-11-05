@@ -1,6 +1,6 @@
 { pkgs, ... }:
 pkgs.mkShell {
-    name = "react-env";
+    name = "gostack-env";
     buildInputs = with pkgs; [
         pnpm
         nodejs_22
@@ -15,6 +15,7 @@ pkgs.mkShell {
         eslint
         biome
         pre-commit
+        golangci-lint
     ];
     shellHook = ''
         export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/docker.sock
