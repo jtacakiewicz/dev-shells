@@ -5,6 +5,7 @@ let
     pythonPackages = python.pkgs;
     lib-path = with pkgs; lib.makeLibraryPath [
         libffi
+        zlib
         openssl
         stdenv.cc.cc
     ];
@@ -23,6 +24,7 @@ in pkgs.mkShell {
         pyPkgs
     ];
     buildInputs = with pkgs; [
+        pandoc
         openssl
         git
         openssh
