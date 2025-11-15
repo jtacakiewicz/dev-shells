@@ -13,6 +13,7 @@ pkgs.mkShell {
         rootlesskit
         docker-compose
         eslint
+        vtsls
         biome
         pre-commit
         golangci-lint
