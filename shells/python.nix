@@ -1,13 +1,18 @@
-{ pkgs, ... }:
+{ pkgs
+, pythonVersion ? "313", ...
+}:
+
 
 let 
-    python = pkgs.python313;
+    python = pkgs."python${pythonVersion}";
     pythonPackages = python.pkgs;
     lib-path = with pkgs; lib.makeLibraryPath [
         libffi
         zlib
         openssl
         stdenv.cc.cc
+        freetype
+        libGL
     ];
     pyPkgs = with pythonPackages; [
         venvShellHook
@@ -27,32 +32,21 @@ in pkgs.mkShell {
         pandoc
         openssl
         git
-        openssh
-        rsync
-        glib
         zlib
-        libGL
-        fontconfig
-        xorg.libX11
-        libxkbcommon
         freetype
-        dbus
+        libGL
     ];
     shellHook = ''
         export "LD_LIBRARY_PATH=$LD_LIBRARY_PATH:${lib-path}"
         VENV=.venv
 
         if test ! -d $VENV; then
-            uv venv
+            UV_PYTHON=${pythonVersion} uv venv -q
             echo "if you want to use other python version use 'export UV_PYTHON=3.x' and remove current .venv"
         fi
         source ./$VENV/bin/activate
         if [ -f requirements.txt ]; then
             uv pip install -r requirements.txt
-        fi
-        if command -v zsh >/dev/null 2>&1
-        then
-            exec zsh
         fi
     '';
 

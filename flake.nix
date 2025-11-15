@@ -25,6 +25,9 @@
             {
             devShells = forAllSystems (pkgs: {
                 python   = pkgs.callPackage ./shells/python.nix { };
+                python310   = pkgs.callPackage ./shells/python.nix { pythonVersion="310"; };
+                python311   = pkgs.callPackage ./shells/python.nix { pythonVersion="311"; };
+                python312   = pkgs.callPackage ./shells/python.nix { pythonVersion="312"; };
                 vulkan   = pkgs.callPackage ./shells/vulkan.nix { };
                 react    = pkgs.callPackage ./shells/react.nix { };
                 bigdata  = pkgs.callPackage ./shells/bigdata.nix { };
