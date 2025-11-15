@@ -24,10 +24,6 @@ pkgs.mkShell {
         DOCKER_PID=$!
         echo "docker id: $DOCKER_PID"
         trap "kill $DOCKER_PID 2>/dev/null" EXIT
-        if command -v zsh >/dev/null 2>&1
-        then
-            zsh
-        fi
     '';
 }
 

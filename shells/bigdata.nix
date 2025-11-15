@@ -11,10 +11,6 @@ pkgs.mkShell {
     shellHook = ''
         export JAVA_HOME=${pkgs.jdk11}
         PATH="${pkgs.jdk}/bin:$PATH"
-        if command -v zsh >/dev/null 2>&1
-        then
-            exec zsh
-        fi
       '';
 }
 

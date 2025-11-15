@@ -58,8 +58,5 @@ mkShell {
         # Prepend or append directories to the PATH
         export PATH="$PATH:$LD_LIBRARY_PATH:$SFML_PATH:${pkgs.xorg.libX11.dev}/lib/pkgconfig:${pkgs.libGL}/lib"
         if command -v zsh >/dev/null 2>&1
-        then
-            exec zsh
-        fi
     '';
 }
