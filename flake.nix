@@ -33,6 +33,7 @@
                 bigdata  = pkgs.callPackage ./shells/bigdata.nix { };
                 android  = pkgs.callPackage ./shells/android.nix { };
                 gostack  = pkgs.callPackage ./shells/gofullstack.nix { };
+                cpp   = pkgs.callPackage ./shells/cpp.nix { };
             });
         };
 }
